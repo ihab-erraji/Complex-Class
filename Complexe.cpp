@@ -4,7 +4,7 @@
 using namespace std;
 int Complexe::num_Zfollower = 0;
 Complexe::Complexe(double re, double img):num_Z(++num_Zfollower), re(re), img(img) {}
-Complexe::Complexe(const Complexe& N):num_Z(++num_Zfollower),re(N.re), img(N.img){}
+Complexe::Complexe(const Complexe& N):num_Z(num_Zfollower),re(N.re), img(N.img){}
 Complexe& Complexe::operator=(const Complexe& Z)
 {
     if (this != &Z) {
@@ -13,7 +13,7 @@ Complexe& Complexe::operator=(const Complexe& Z)
     }
     return *this;
 }
-Complexe Complexe::operator+(Complexe h)
+Complexe Complexe::operator+(const Complexe& h)
 {
    // Complexe* NC = new Complexe(0, 0);
   //  NC->re = this->re + h.re;
@@ -29,7 +29,7 @@ Complexe Complexe::operator+(double a)
     return Complexe(this->re + a, this->img);
 }
 
-Complexe Complexe::operator-(Complexe h) {
+Complexe Complexe::operator-(const Complexe& h) {
     //Complexe* NC = new Complexe(0, 0);
    // NC->re = this->re - h.re;
    // NC->img = this->img - h.img;
@@ -42,7 +42,7 @@ Complexe Complexe::operator-(double a)
    // NC->img = this->img;
     return Complexe(this->re - a, this->img);
 }
-Complexe Complexe::operator*(Complexe h) {
+Complexe Complexe::operator*(const Complexe& h) {
     //Complexe* NC = new Complexe(0, 0);
    // NC->re = (this->re * h.re) - (this->img * h.img);
    // NC->img = (this->re * h.img) + (this->img * h.re);
@@ -56,12 +56,12 @@ Complexe Complexe::operator*(double r)
     //NC->img = this->img * r;
     return Complexe(this->re * r, this->img * r);
 }
-Complexe Complexe::operator/(Complexe h) {
+Complexe Complexe::operator/(const Complexe& h) {
     //Complexe* NC = new Complexe(0, 0);
     //NC->re = ((this->re * h.re) - (this->img * h.img)) / (pow(h.re, 2) + pow(h.img, 2));
     //NC->img = ((this->img * h.re) - (this->re * h.img)) / (pow(h.re, 2) + pow(h.img, 2));
     double d = pow(h.re, 2) + pow(h.img, 2);
-    if (h==0)
+    if (d==0)
     {
         cout << "Erreur : division par zero !" << endl;
         return Complexe(0, 0);
@@ -84,20 +84,20 @@ Complexe Complexe::operator/(double r)
 
         return Complexe(this->re / r, this->img / r);
     }
-    
+   
 }
-bool Complexe::operator==(Complexe Z)
+bool Complexe::operator==(const Complexe& Z)
 {
        return this->re == Z.re && this->img == Z.img;
 }
 
 
-bool Complexe::operator!=(Complexe Z)
+bool Complexe::operator!=(const Complexe& Z)
 {
     return this->re != Z.re || this->img != Z.img;;
 }
 
-bool Complexe::operator>(Complexe Z)
+bool Complexe::operator>(const Complexe& Z)
 {
     double m1 = sqrt(pow(this->re,2)+ pow(this->img, 2));
     double m2 = sqrt(pow(Z.re, 2) + pow(Z.img, 2));
@@ -105,14 +105,14 @@ bool Complexe::operator>(Complexe Z)
         return m1 > m2;
 }
 
-bool Complexe::operator>=(Complexe Z)
+bool Complexe::operator>=(const Complexe& Z)
 {
     double m1 = sqrt(pow(this->re, 2) + pow(this->img, 2));
     double m2 = sqrt(pow(Z.re, 2) + pow(Z.img, 2));
     
         return m1 >= m2;
 }
-bool Complexe::operator<(Complexe Z)
+bool Complexe::operator<(const Complexe& Z)
 {
     double m1 = sqrt(pow(this->re, 2) + pow(this->img, 2));
     double m2 = sqrt(pow(Z.re, 2) + pow(Z.img, 2));
@@ -120,7 +120,7 @@ bool Complexe::operator<(Complexe Z)
         return m1 < m2;
 }
 
-bool Complexe::operator<=(Complexe Z)
+bool Complexe::operator<=(const Complexe& Z)
 {
     double m1 = sqrt(pow(this->re, 2) + pow(this->img, 2));
     double m2 = sqrt(pow(Z.re, 2) + pow(Z.img, 2));
@@ -184,7 +184,7 @@ bool Complexe::operator<=(double r)
 
 // utilisation des opérateurs == , != , < ,<= , > , >= dans la méthode Comparaison entre deux complexes
 
-void Complexe::Comparaison(Complexe U)
+void Complexe::Comparaison(const Complexe& U)
 {
     if (*this == U)
         cout << "C" << this->num_Z << " = C" << U.num_Z << endl;
@@ -233,4 +233,17 @@ void Complexe::afficher() const {
 
 Complexe::~Complexe()
 {
+}
+
+Complexe operator/(double a, const Complexe& Z)
+{
+    double d = Z.re * Z.re + Z.img * Z.img;
+
+    if (d == 0)
+    {
+        cout << "Erreur : division par zero !" << endl;
+        return Complexe(0, 0);
+    }
+
+    return Complexe(a * Z.re / d, -a * Z.img / d);
 }

@@ -42,9 +42,11 @@ int main()
 
     C7.Comparaison(C3);  // comparaison de deux nombres complexes
 
-    C5.Comparaison(-2);
+    C5.Comparaison(-2);   // comparaison entre un complexe est un réel
 
-
+    Complexe C9 = 1 / C7;
+    C9.afficher();
+  
     return 0;
 }
 

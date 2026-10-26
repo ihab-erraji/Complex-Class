@@ -6,29 +6,30 @@ public:
     Complexe(double, double);
     Complexe(const Complexe&);
     Complexe& operator=(const Complexe&);
-    Complexe operator+(Complexe);
+    Complexe operator+(const Complexe&);
     Complexe operator+(double);
-    Complexe operator-(Complexe);
+    Complexe operator-(const Complexe&);
     Complexe operator-(double);
-    Complexe operator*(Complexe);
+    Complexe operator*(const Complexe&);
     Complexe operator*(double);
-    Complexe operator/(Complexe);
+    Complexe operator/(const Complexe&);
     Complexe operator/(double);
-    bool operator==(Complexe);
-    bool operator!=(Complexe);   
-    bool operator>(Complexe); 
-    bool operator>=(Complexe);
-    bool operator<(Complexe);
-    bool operator<=(Complexe);
+    bool operator==(const Complexe&);
+    bool operator!=(const Complexe&);   
+    bool operator>(const Complexe&); 
+    bool operator>=(const Complexe&);
+    bool operator<(const Complexe&);
+    bool operator<=(const Complexe&);
     bool operator==(double);
     bool operator!=(double);
     bool operator>(double);
     bool operator>=(double);
     bool operator<(double);
     bool operator<=(double);
-    void Comparaison(Complexe);
+    void Comparaison(const Complexe&);
     void Comparaison(double);
     void afficher() const;
+    friend Complexe operator/(double, const Complexe&);
     ~Complexe();
 
 private:
@@ -38,3 +39,4 @@ private:
     double img;
 };
 
+Complexe operator/(double, const Complexe&);
